@@ -4,8 +4,8 @@
   "description": "chat app with node express",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "Bikesh Chaudhary",
   "license": "ISC"
