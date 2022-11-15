@@ -13,8 +13,14 @@ const publicDirPath = path.join(__dirname, "../public");
 
 app.use(express.static(publicDirPath));
 
-io.on("connection", () => {
+io.on("connection", (socket) => {
   console.log("web Socket connection!");
+
+  socket.emit("message", "Welcome");
+
+  socket.on("sendMessage", (message) => {
+    io.emit("message", message);
+  });
 });
 
 app.get("/", (req, res) => {
