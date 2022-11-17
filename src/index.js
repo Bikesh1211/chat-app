@@ -17,9 +17,19 @@ io.on("connection", (socket) => {
   console.log("web Socket connection!");
 
   socket.emit("message", "Welcome");
+  socket.broadcast.emit("message", "a new user joined");
 
   socket.on("sendMessage", (message) => {
     io.emit("message", message);
+  });
+  socket.on("disconnect", () => {
+    io.emit("message", "a user has left");
+  });
+  socket.on("sendLocation", (coords) => {
+    io.emit(
+      "message",
+      `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
+    );
   });
 });
 
