@@ -9,9 +9,13 @@ const $messages = document.querySelector("#messages");
 const messageTemplate = document.querySelector("#message-template").innerHTML;
 const locationTemplate = document.querySelector("#location-template").innerHTML;
 
-const { username, room } = qs.parse(location.search, {
-  ignoreQueryPrefix: true,
-});
+const searchItem = location.search;
+const searchArray = searchItem.split("&");
+
+const username = searchArray[0].split("=")[1].replace("+", " ");
+const room = searchArray[1].split("=")[1].replace("+", " ");
+const userDetail = { username, room };
+console.log(username, "<======>", room);
 
 socket.on("message", (message) => {
   const html = Mustache.render(messageTemplate, {

@@ -27,12 +27,8 @@ io.on("connection", (socket) => {
     socket.emit("message", generateMessage("Welcome!"));
     socket.broadcast
       .to(room)
-      .emit(
-        "message",
-        generateMessage(generateMessage(`${username} has joined ${room}`))
-      );
+      .emit("message", generateMessage(`${username} has Joined`));
   });
-
   socket.on("sendMessage", (message, cb) => {
     const filter = new Filter();
     if (filter.isProfane(message)) {
@@ -62,5 +58,3 @@ app.get("/", (req, res) => {
 server.listen(port, () => {
   console.log("Server Is Running on " + "http://localhost:" + port);
 });
-
-console.log("hello World");
