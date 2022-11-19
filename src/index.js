@@ -1,9 +1,10 @@
 const express = require("express");
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 8080;
 const path = require("path");
 
 const http = require("http");
 const socketio = require("socket.io");
+const Filter = require("bad-words");
 
 const app = express();
 const server = http.createServer(app);
@@ -19,17 +20,23 @@ io.on("connection", (socket) => {
   socket.emit("message", "Welcome");
   socket.broadcast.emit("message", "a new user joined");
 
-  socket.on("sendMessage", (message) => {
+  socket.on("sendMessage", (message, cb) => {
+    const filter = new Filter();
+    if (filter.isProfane(message)) {
+      return cb("Profanity is not allowed");
+    }
     io.emit("message", message);
+    cb();
   });
   socket.on("disconnect", () => {
     io.emit("message", "a user has left");
   });
-  socket.on("sendLocation", (coords) => {
+  socket.on("sendLocation", (coords, cb) => {
     io.emit(
       "message",
       `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
     );
+    cb();
   });
 });
 
