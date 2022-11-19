@@ -1,13 +1,19 @@
 const socket = io();
-socket.on("message", (msg) => {
-  console.log(msg);
-});
 
 const $messageForm = document.querySelector("#message-form");
 const $messageFormInput = document.querySelector("input");
 const $messageFormButton = document.querySelector("button");
-
 const $sendLocationButton = document.querySelector("#send-location");
+const $messages = document.querySelector("#messages");
+
+const messageTemplate = document.querySelector("#message-template").innerHTML;
+
+socket.on("message", (message) => {
+  const html = Mustache.render(messageTemplate, {
+    message,
+  });
+  $messages.insertAdjacentHTML("beforeend", html);
+});
 
 $messageForm.addEventListener("submit", (e) => {
   e.preventDefault();
