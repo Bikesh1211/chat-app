@@ -34,7 +34,7 @@ io.on("connection", (socket) => {
     if (filter.isProfane(message)) {
       return cb("Profanity is not allowed");
     }
-    io.emit("message", generateMessage(message));
+    io.to("room1").emit("message", generateMessage(message));
     cb();
   });
   socket.on("disconnect", () => {

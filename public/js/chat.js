@@ -12,9 +12,12 @@ const locationTemplate = document.querySelector("#location-template").innerHTML;
 const searchItem = location.search;
 const searchArray = searchItem.split("&");
 
-const username = searchArray[0].split("=")[1].replace("+", " ");
-const room = searchArray[1].split("=")[1].replace("+", " ");
-const userDetail = { username, room };
+// const username = searchArray[0].split("=")[1].replace("+", " ");
+// const room = searchArray[1].split("=")[1].replace("+", " ");
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
+
 console.log(username, "<======>", room);
 
 socket.on("message", (message) => {
