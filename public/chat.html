@@ -10,13 +10,19 @@
   </head>
   <body>
     <div class="chat">
-      <div class="chat__sidebar"></div>
+      <div class="chat__sidebar" id="sidebar"></div>
       <div class="chat__main">
         <div id="messages" class="chat__messages"></div>
 
         <div class="compose">
           <form id="message-form">
-            <input type="text" placeholder="message" name="message" />
+            <input
+              type="text"
+              placeholder="message"
+              name="message"
+              autocomplete="off"
+              required
+            />
             <button>Send</button>
           </form>
         </div>
@@ -28,23 +34,35 @@
     <script id="message-template" type="text/html">
       <div class="message">
         <p>
-          <span class="message__name">Username</span>
-          <span class="message_meta">{{createdAt}}</span>
+          <span class="message__name">{{username}}</span>
+          <span class="message_meta" style="color: gray; font-size: 12px;"
+            >{{createdAt}}</span
+          >
         </p>
-        <p>{{createdAt}} - {{message}}</p>
+        <p>{{message}}</p>
       </div>
     </script>
 
     <script id="location-template" type="text/html">
       <div class="message">
         <p>
-          <span class="message__name">biki don</span>
+          <span class="message__name">{{username}}</span>
           <span class="message_meta">{{createdAt}}</span>
         </p>
         <p>
           <a href="{{url}}" target="_blank"> See location</a>
         </p>
       </div>
+    </script>
+
+    <script id="sidebar-template" type="text/html">
+      <h2 class="room-title">{{room}}</h2>
+      <h3 class="list-title">user</h3>
+      <ul class="users">
+        {{#users}}
+        <li>{{username}}</li>
+        {{/users}}
+      </ul>
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
