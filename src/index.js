@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
     if (filter.isProfane(message)) {
       return cb("Profanity is not allowed");
     }
-    io.to(user.room).emit("message", generateMessage(user.username, message));
+    io.to(user?.room).emit("message", generateMessage(user?.username, message));
     cb();
   });
   socket.on("disconnect", () => {
@@ -65,11 +65,10 @@ io.on("connection", (socket) => {
       );
     }
 
-    io.to(user.room).emit("roomData", {
-      room: user.room,
-      users: getUsersInRoom(user.room),
+    io.to(user?.room).emit("roomData", {
+      room: user?.room,
+      users: getUsersInRoom(user?.room),
     });
-    
   });
   socket.on("sendLocation", (coords, cb) => {
     const user = getUser(socket.id);
