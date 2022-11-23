@@ -7,7 +7,9 @@ const $sendLocationButton = document.querySelector("#send-location");
 const $messages = document.querySelector("#messages");
 
 const messageTemplate = document.querySelector("#message-template").innerHTML;
-const locationTemplate = document.querySelector("#location-template").innerHTML;
+const locationTemplate = document.querySelector(
+  "#location-message-template"
+).innerHTML;
 
 const sidebarTemplate = document.querySelector("#sidebar-template").innerHTML;
 
@@ -16,10 +18,12 @@ const searchArray = searchItem.split("&");
 
 // const username = searchArray[0].split("=")[1].replace("+", " ");
 // const room = searchArray[1].split("=")[1].replace("+", " ");
+
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
-   
+console.log(username, room,'<=========== this result');
+
 const autoScroll = () => {
   // new message elements
   const $newMessage = $messages.lastElementChild;
@@ -50,6 +54,7 @@ socket.on("message", (message) => {
   autoScroll();
 });
 socket.on("locationMessage", (message) => {
+  console.log(message.username,'<========= this is the message');
   const html = Mustache.render(locationTemplate, {
     username: message.username,
     url: message.url,
